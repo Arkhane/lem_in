@@ -18,13 +18,16 @@ int			check_line(t_list *config)
 	int			i;
 
 	i = 0;
-	while (config->value[i] != '\0')
+	if (config->value)
 	{
-		if (config->value[i] == 'L')
-			ft_error(1);
-		if (config->value[i] == '-')
-			return (1);
-		i++;
+		while (config->value[i] != '\0')
+		{
+			if (config->value[i] == 'L')
+				ft_error(1);
+			if (config->value[i] == '-')
+				return (1);
+			i++;
+		}
 	}
 	return (0);
 }
@@ -58,7 +61,7 @@ void		link_rooms(t_room **room, char *str)
 	int			i;
 
 	i = 0;
-	ft_putendl(str);
+//	ft_putendl(str);
 	while (str[i] != '-')
 		i++;
 	room1 = ft_strsub(str, 0, i);
@@ -68,12 +71,12 @@ void		link_rooms(t_room **room, char *str)
 		if (ft_strcmp((*room)->name, room1) == 0)
 		{
 			*room = add_room_link(*room, room2);
-			ft_putendl("OK1 -> 2");
+//			ft_putendl("OK1 -> 2");
 		}
 		if (ft_strcmp((*room)->name, room2) == 0)
 		{
 			*room = add_room_link(*room, room1);
-			ft_putendl("OK2 -> 1");
+//			ft_putendl("OK2 -> 1");
 		}
 		*room = (*room)->next;
 	}
@@ -96,16 +99,11 @@ int			check_tube(t_room *room, char *str)
 	room2 = ft_strsub(str, i + 1, ft_strlen(str));
 	while (room != NULL)
 	{
-//		ft_putstr("  ---  ");
-//		ft_putendl(room->name);
 		if (ft_strcmp(room->name, room1) == 0
 			|| ft_strcmp(room->name, room2) == 0)
 			found++;
 		room = room->next;
 	}
-//	ft_putstr("Found = ");
-//	ft_putnbr(found);
-//	ft_putstr("\n");
 	if (found >= 2)
 		return (1);
 	return (0);
@@ -164,9 +162,9 @@ void		init_antshouse(t_house **house, t_list *config)
 		config = init_rooms(*house, config);
 		config = config->next;
 	}
-	ft_putendl("----- PARSING ROOMS -----");
-	print_rooms(*house);
-	ft_putendl("----- tests tubes -----");
+//	ft_putendl("----- PARSING ROOMS -----");
+//	print_rooms(*house);
+//	ft_putendl("----- tests tubes -----");
 	while (check_line(config) == 1)
 	{
 		init_tubes((*house)->room, config);

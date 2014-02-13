@@ -20,37 +20,28 @@ void		print_links(t_room *room)
 	tmp = room;
 	while (tmp)
 	{
+		ft_putstr(tmp->name);
+		ft_putstr("   ...   ");
 		while (tmp->links)
 		{
-//			ft_putstr(tmp->links->value);
-//			ft_putstr("xxx\n");
+			ft_putstr(tmp->links->value);
+			ft_putstr(" - ");
 			tmp->links = tmp->links->next;
 		}
-//		ft_putstr(tmp->links->value);
-//		ft_putstr("\n");
+		ft_putstr("\n");
 		tmp = tmp->next;
 	}
-/*	while (tmp->links->next)
-	{
-//		ft_putstr(tmp->links->value);
-//		ft_putstr("\n");
-		tmp->links = tmp->links->next;
-	}
-//	ft_putstr(tmp->links->value);
-//	ft_putstr("\n");
-	tmp = tmp->next;
-*/}
+}
 
 void		print_list(t_list *list)
 {
-	while (list->next)
+	while (list)
 	{
-		ft_putstr(list->value);
+		if (list->value)
+			ft_putstr(list->value);
 		ft_putstr("\n");
 		list = list->next;
 	}
-	ft_putstr(list->value);
-	ft_putstr("\n");
 }
 
 void		print_rooms(t_house *house)
@@ -139,10 +130,12 @@ t_list		*lst_add(t_list *list, t_list *new)
 void		get_config(t_list **config)
 {
 	char		*line;
+	int			ret;
 
-	while (get_next_line(0, &line) == 1) //ft_strncmp(line, "ok", 2) != 0)
+	ret = 42;
+	while (ret != 0) //ft_strncmp(line, "ok", 2) != 0)
 	{
-//		get_next_line(0, &line);
+		ret = get_next_line(0, &line);
 		*config = lst_add(*config, lst_new(line));
 	}
 }
