@@ -13,6 +13,34 @@
 #include "lem-in.h"
 #include <libft.h>
 
+void		print_links(t_room *room)
+{
+	t_room		*tmp;
+
+	tmp = room;
+	while (tmp)
+	{
+		while (tmp->links)
+		{
+//			ft_putstr(tmp->links->value);
+//			ft_putstr("xxx\n");
+			tmp->links = tmp->links->next;
+		}
+//		ft_putstr(tmp->links->value);
+//		ft_putstr("\n");
+		tmp = tmp->next;
+	}
+/*	while (tmp->links->next)
+	{
+//		ft_putstr(tmp->links->value);
+//		ft_putstr("\n");
+		tmp->links = tmp->links->next;
+	}
+//	ft_putstr(tmp->links->value);
+//	ft_putstr("\n");
+	tmp = tmp->next;
+*/}
+
 void		print_list(t_list *list)
 {
 	while (list->next)

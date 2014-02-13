@@ -55,18 +55,27 @@ void		link_rooms(t_room **room, char *str)
 {
 	char		*room1;
 	char		*room2;
+	int			i;
 
+	i = 0;
+	ft_putendl(str);
 	while (str[i] != '-')
 		i++;
 	room1 = ft_strsub(str, 0, i);
 	room2 = ft_strsub(str, i + 1, ft_strlen(str));
-	while (room->next != NULL)
+	while ((*room) != NULL)
 	{
-		if (ft_strcmp(room->name, room1) == 0)
-			add_room_link(&room, room2);
-		if (ft_strcmp(room->name, room2) == 0)
-			add_room_link(&room, room1);
-		room = room->next;
+		if (ft_strcmp((*room)->name, room1) == 0)
+		{
+			*room = add_room_link(*room, room2);
+			ft_putendl("OK1 -> 2");
+		}
+		if (ft_strcmp((*room)->name, room2) == 0)
+		{
+			*room = add_room_link(*room, room1);
+			ft_putendl("OK2 -> 1");
+		}
+		*room = (*room)->next;
 	}
 }
 
@@ -79,27 +88,24 @@ int			check_tube(t_room *room, char *str)
 
 	i = 0;
 	found = 0;
-	ft_putendl(str);
+
 
 	while (str[i] != '-')
 		i++;
 	room1 = ft_strsub(str, 0, i);
 	room2 = ft_strsub(str, i + 1, ft_strlen(str));
-	while (room->next != NULL)
+	while (room != NULL)
 	{
-		ft_putstr("  ---  ");
-		ft_putendl(room->name);
+//		ft_putstr("  ---  ");
+//		ft_putendl(room->name);
 		if (ft_strcmp(room->name, room1) == 0
 			|| ft_strcmp(room->name, room2) == 0)
 			found++;
 		room = room->next;
 	}
-	if (ft_strcmp(room->name, room1) == 0
-		|| ft_strcmp(room->name, room2) == 0)
-		found++;
-	ft_putstr("Found = ");
-	ft_putnbr(found);
-	ft_putstr("\n");
+//	ft_putstr("Found = ");
+//	ft_putnbr(found);
+//	ft_putstr("\n");
 	if (found >= 2)
 		return (1);
 	return (0);
@@ -113,7 +119,6 @@ void		init_tubes(t_room *room, t_list *config)
 	if (check_tube(tmp, config->value) == 0)
 		ft_error(4);
 	link_rooms(&tmp, config->value);
-
 }
 
 t_list		*init_rooms(t_house *house, t_list *config)
@@ -167,6 +172,7 @@ void		init_antshouse(t_house **house, t_list *config)
 		init_tubes((*house)->room, config);
 		config = config->next;
 	}
+	print_links((*house)->room);
 }
 
 void		ft_error(int error)

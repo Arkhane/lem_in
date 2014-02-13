@@ -60,8 +60,10 @@ t_room		*rm_add(t_room *list, t_room *new);
 t_room		*rm_new(char *value, int mode);
 int			check_line(t_list *config);
 void		print_rooms(t_house *house);
+t_room		*add_room_link(t_room *room, char *name);
 
 
 void		print_list(t_list *list);
+void		print_links(t_room *room);
 #endif
 
