@@ -35,10 +35,12 @@ int			check_line(t_list *config)
 int			check_start_end(char *str, t_house *house)
 {
 
+	if (!str)
+		(ft_error(3));
 	if (ft_strncmp(str, "##start", 7) == 0)
 	{
 		if (house->has_start == 1)
-			ft_error(2);
+			ft_error(3);
 		house->has_start = 1;
 		return (1);
 	}
@@ -61,7 +63,6 @@ void		link_rooms(t_room **room, char *str)
 	int			i;
 
 	i = 0;
-//	ft_putendl(str);
 	while (str[i] != '-')
 		i++;
 	room1 = ft_strsub(str, 0, i);
@@ -69,15 +70,9 @@ void		link_rooms(t_room **room, char *str)
 	while ((*room) != NULL)
 	{
 		if (ft_strcmp((*room)->name, room1) == 0)
-		{
 			*room = add_room_link(*room, room2);
-//			ft_putendl("OK1 -> 2");
-		}
 		if (ft_strcmp((*room)->name, room2) == 0)
-		{
 			*room = add_room_link(*room, room1);
-//			ft_putendl("OK2 -> 1");
-		}
 		*room = (*room)->next;
 	}
 }
@@ -97,6 +92,8 @@ int			check_tube(t_room *room, char *str)
 		i++;
 	room1 = ft_strsub(str, 0, i);
 	room2 = ft_strsub(str, i + 1, ft_strlen(str));
+	if (ft_strcmp(room1, room2) == 0)
+		ft_error(6);
 	while (room != NULL)
 	{
 		if (ft_strcmp(room->name, room1) == 0
@@ -119,6 +116,20 @@ void		init_tubes(t_room *room, t_list *config)
 	link_rooms(&tmp, config->value);
 }
 
+int			check_room_exist(t_room *room, char *str)
+{
+	t_room		*tmp;
+
+	tmp = room;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->name, str) == 0)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 t_list		*init_rooms(t_house *house, t_list *config)
 {
 	int			check;
@@ -127,6 +138,8 @@ t_list		*init_rooms(t_house *house, t_list *config)
 	if (check == 1 || check == 2)
 	{
 		config = config->next;
+		if (check_room_exist(house->room, config->value) == 1)
+			ft_error(5);
 		if (check == 1)
 			house->room = rm_add(house->room, rm_new(config->value, 1));
 		if (check == 2)
@@ -135,6 +148,8 @@ t_list		*init_rooms(t_house *house, t_list *config)
 	}
 	if (check == 3)
 		return (config);
+	if (check_room_exist(house->room, config->value) == 1)
+			ft_error(5);
 	house->room = rm_add(house->room, rm_new(config->value, 0));
 	return (config);
 }
@@ -144,6 +159,8 @@ void		init_ants(t_house *house, t_list *config)
 	int			i;
 
 	i = 0;
+	if (!config->value)
+		ft_error(0);
 	while (config->value[i])
 	{
 		if (config->value[i] < 48 || config->value[i] > 57)
@@ -165,6 +182,8 @@ void		init_antshouse(t_house **house, t_list *config)
 //	ft_putendl("----- PARSING ROOMS -----");
 //	print_rooms(*house);
 //	ft_putendl("----- tests tubes -----");
+	if ((*house)->has_end == 0 || (*house)->has_start == 0)
+		ft_error(3);
 	while (check_line(config) == 1)
 	{
 		init_tubes((*house)->room, config);
@@ -180,11 +199,15 @@ void		ft_error(int error)
 	if (error == 1)
 		ft_putendl("Error : 'L' in parameters");
 	if (error == 2)
-		ft_putendl("Error : Start redefined");
+		ft_putendl("Error : Empty list");
 	if (error == 3)
-		ft_putendl("Error : End redefined");
+		ft_putendl("Error : Start/End redefined or inexistant");
 	if (error == 4)
 		ft_putendl("Error : Can't create tube from invalid room name");
+	if (error == 5)
+		ft_putendl("Error : Room already exists");
+	if (error == 6)
+		ft_putendl("Error : Tube connecting room to itself");
 	exit(0);
 }
 

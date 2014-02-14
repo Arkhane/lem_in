@@ -72,7 +72,7 @@ t_room		*rm_new(char *value, int mode)
 	int			i;
 
 	i = 0;
-	while (value[i] != ' ')
+	while (value[i] > 32 && value[i] < 127)
 		i++;
 	value = ft_strsub(value, 0, i);
 	new = malloc(sizeof(t_room));
