@@ -13,7 +13,7 @@
 .PHONY: all $(NAME) clean fclean re
 
 NAME = lem-in
-SRCS = main.c get_config.c room_links.c
+SRCS = main.c get_config.c room_links.c calc_path.c
 #libft_func.c ft_get_next_line.c
 
 OBJ = $(SRCS:.c=.o)

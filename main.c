@@ -189,7 +189,7 @@ void		init_antshouse(t_house **house, t_list *config)
 		init_tubes((*house)->room, config);
 		config = config->next;
 	}
-	print_links((*house)->room);
+//	print_links((*house)->room);
 }
 
 void		ft_error(int error)
@@ -215,6 +215,7 @@ int			main(void)
 {
 	t_list		*config;
 	t_house		*house;
+	t_room		*path;
 
 	config = NULL;
 	house = malloc(sizeof(t_house));
@@ -224,6 +225,6 @@ int			main(void)
 	print_list(config);
 	init_antshouse(&house, config);
 //	print_rooms(house);
-//	calc_path(house);
+	path = calc_path(house->room);
 	return (0);
 }

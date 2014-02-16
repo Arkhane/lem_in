@@ -41,6 +41,8 @@ struct			s_room
 	char		*name;
 	int			start;
 	int			end;
+	int			visited;
+	int			weight;
 	t_list		*links;
 	t_room		*next;
 };
@@ -61,7 +63,9 @@ t_room		*rm_new(char *value, int mode);
 int			check_line(t_list *config);
 void		print_rooms(t_house *house);
 t_room		*add_room_link(t_room *room, char *name);
-
+t_room		*calc_path(t_room *room);
+t_room		*find_start(t_room *room);
+t_room		*find_end(t_room *room);
 
 void		print_list(t_list *list);
 void		print_links(t_room *room);
