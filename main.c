@@ -208,6 +208,8 @@ void		ft_error(int error)
 		ft_putendl("Error : Room already exists");
 	if (error == 6)
 		ft_putendl("Error : Tube connecting room to itself");
+	if (error == 7)
+		ft_putendl("Error : Exit not connected to Entry");
 	exit(0);
 }
 

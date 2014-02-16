@@ -41,7 +41,6 @@ struct			s_room
 	char		*name;
 	int			start;
 	int			end;
-	int			visited;
 	int			weight;
 	t_list		*links;
 	t_room		*next;
@@ -66,8 +65,12 @@ t_room		*add_room_link(t_room *room, char *name);
 t_room		*calc_path(t_room *room);
 t_room		*find_start(t_room *room);
 t_room		*find_end(t_room *room);
+t_list		*shortest_route(t_room *room);
 
 void		print_list(t_list *list);
 void		print_links(t_room *room);
+void		print_route(t_list *route);
+void		ft_lstrev(t_list **list);
+
 #endif
 

@@ -68,60 +68,63 @@ t_room		*find_start(t_room *room)
 	return (NULL);
 }
 
-void		swipe(int i, t_list *links, t_room *room)
+int			swipe(int i, t_list *links, t_room *room)
 {
 	t_room		*tmp;
+	int			flag;
 
+	flag = 0;
 	while (links)
 	{
 		tmp = room;
 		while (tmp && ft_strcmp(tmp->name, links->value) != 0)
 			tmp = tmp->next;
 		if (tmp->weight == 0)
+		{
 			tmp->weight = i;
+			flag = 1;
+		}
 		links = links->next;
 	}
+	return (flag);
 }
 
 int			swipe_start(t_room **room)
 {
-	int			ret;
 	t_room		*tmp;
+	int			flag;
 
-	ret = 0;
 	tmp = (*room);
-
 	while (tmp)
 	{
-		if (tmp->weight == 0)
-			ret = 1;
 		if (tmp->weight != 0)
-			swipe(tmp->weight + 1, tmp->links, *room);
+			flag = swipe(tmp->weight + 1, tmp->links, *room);
 		tmp = tmp->next;
 	}
-	return (ret);
+	return (flag);
 }
 
 t_room		*calc_path(t_room *room)
 {
 	t_room		*start;
 	t_room		*end;
+	t_list		*route;
 
 	start = find_start(room);
 	end = find_end(room);
-/*	ft_putstr("La room de depart est la room ");
-	ft_putendl(path->name);
-	ft_putstr("La room de sortie est la room ");
-	ft_putendl(end->name);*/
 	start->weight = 1;
 	while (swipe_start(&room) != 0)
 		;
-/*	while (room)
-	{
-		ft_putnbr(room->weight);
-		ft_putendl(room->name);
-		room = room->next;
-	}
-*/
+//	while (room)
+//	{
+//		ft_putnbr(room->weight);
+//		ft_putstr(" : poids de la piece n# ");
+//		ft_putendl(room->name);
+//		room = room->next;
+//	}
+	route = shortest_route(room);
+	ft_putendl(route->value);
+	ft_lstrev(&route);
+	print_route(route);
 	return (end);
 }
