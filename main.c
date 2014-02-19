@@ -217,7 +217,8 @@ int			main(void)
 {
 	t_list		*config;
 	t_house		*house;
-	t_list		*route;
+	t_list		*simple_route;
+	t_route		*route;
 
 	config = NULL;
 	house = malloc(sizeof(t_house));
@@ -227,7 +228,8 @@ int			main(void)
 	print_list(config);
 	init_antshouse(&house, config);
 //	print_rooms(house);
-	route = calc_path(house->room);
-	march_of_ants(route, house);
+	simple_route = calc_path(house->room);
+	route = make_route(simple_route);
+	march_of_ants(simple_route, house, route);
 	return (0);
 }

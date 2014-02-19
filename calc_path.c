@@ -12,22 +12,7 @@
 
 #include "lem-in.h"
 #include <libft.h>
-/*
-t_room		*find_end(t_room *room)
-{
-	t_room		*tmp;
 
-	tmp = room;
-	while (tmp)
-	{
-		if (tmp->end == 1)
-			return (tmp);
-		tmp = tmp->next;
-	}
-	ft_error(3);
-	return (NULL);
-}
-*/
 t_room		*find_start(t_room *room)
 {
 	t_room		*tmp;
@@ -82,22 +67,13 @@ int			swipe_start(t_room **room)
 t_list		*calc_path(t_room *room)
 {
 	t_room		*start;
-	t_list		*route;
+	t_list		*simple_route;
 
 	start = find_start(room);
 	start->weight = 1;
 	while (swipe_start(&room) != 0)
 		;
-//	while (room)
-//	{
-//		ft_putnbr(room->weight);
-//		ft_putstr(" : poids de la piece n# ");
-//		ft_putendl(room->name);
-//		room = room->next;
-//	}
-	route = shortest_route(room);
-//	ft_putendl(route->value);
-	ft_lstrev(&route);
-	print_route(route);
-	return (route);
+	simple_route = shortest_route(room);
+	ft_lstrev(&simple_route);
+	return (simple_route);
 }

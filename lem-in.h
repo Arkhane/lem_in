@@ -16,12 +16,13 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-typedef struct s_list	t_list;
-typedef struct s_house	t_house;
-typedef struct s_room	t_room;
-typedef struct s_tube	t_tube;
-typedef struct s_ant	t_ant;
-typedef struct s_route	t_route;
+typedef struct s_list		t_list;
+typedef struct s_house		t_house;
+typedef struct s_room		t_room;
+typedef struct s_tube		t_tube;
+typedef struct s_ant		t_ant;
+typedef struct s_route		t_route;
+typedef struct s_route_el	t_route_el;
 
 struct			s_ant
 {
@@ -31,12 +32,18 @@ struct			s_ant
 	t_ant		*next;
 };
 
-struct			s_route;
+struct			s_route_el
 {
 	char		*value;
 	int			occupied;
-	t_route		*next;
-	t_route		*prev;
+	t_route_el	*next;
+	t_route_el	*prev;
+};
+
+struct			s_route
+{
+	t_route_el		*first;
+	t_route_el		*last;
 };
 
 struct			s_list
@@ -85,7 +92,8 @@ t_list		*calc_path(t_room *room);
 t_room		*find_start(t_room *room);
 t_room		*find_end(t_room *room);
 t_list		*shortest_route(t_room *room);
-void		march_of_ants(t_list *route, t_house *house);
+void		march_of_ants(t_list *ant_route, t_house *house, t_route *route);
+t_route		*make_route(t_list *list);
 
 void		print_list(t_list *list);
 void		print_links(t_room *room);

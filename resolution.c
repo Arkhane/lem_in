@@ -41,22 +41,7 @@ void		ft_lstrev(t_list **list)
 	}
 	*list = start;
 }
-/*
 
-t_room		*find_next_node(int weight, t_room *room, t_list *name)
-{
-	t_room		*tmp;
-
-		tmp = room;
-		while (tmp && tmp->weight != weight)
-			tmp = tmp->next;
-		if (tmp->weight == weight)
-			return (tmp);
-		return (find_next_node(weight, room, name));
-}
-
-
-*/
 t_room		*find_next_node(int weight, t_room *room, t_list *name)
 {
 	t_room		*tmp;
