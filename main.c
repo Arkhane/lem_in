@@ -217,16 +217,17 @@ int			main(void)
 {
 	t_list		*config;
 	t_house		*house;
-	t_room		*path;
+	t_list		*route;
 
 	config = NULL;
 	house = malloc(sizeof(t_house));
 //	config = malloc(sizeof(t_list));
 	get_config(&config);
-	ft_putendl("----- LISTE -----");
+//	ft_putendl("----- LISTE -----");
 	print_list(config);
 	init_antshouse(&house, config);
 //	print_rooms(house);
-	path = calc_path(house->room);
+	route = calc_path(house->room);
+	march_of_ants(route, house);
 	return (0);
 }

@@ -133,7 +133,7 @@ void		get_config(t_list **config)
 	int			ret;
 
 	ret = 42;
-	while (ret != 0) //ft_strncmp(line, "ok", 2) != 0)
+	while (ret != 0)
 	{
 		ret = get_next_line(0, &line);
 		*config = lst_add(*config, lst_new(line));

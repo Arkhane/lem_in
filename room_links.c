@@ -30,9 +30,5 @@ t_room		*add_room_link(t_room *room, char *name)
 	}
 	else
 		room->links = new;
-//	ft_putstr("La room nommee ");
-//	ft_putstr(room->name);
-//	ft_putstr(" est maintenant linkee a la room ");
-//	ft_putendl(room->links->value);
 	return (room);
 }

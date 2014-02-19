@@ -22,7 +22,7 @@ void		print_route(t_list *route)
 	}
 }
 
-void			ft_lstrev(t_list **list)
+void		ft_lstrev(t_list **list)
 {
 	t_list	*end;
 	t_list	*start;
@@ -41,7 +41,22 @@ void			ft_lstrev(t_list **list)
 	}
 	*list = start;
 }
+/*
 
+t_room		*find_next_node(int weight, t_room *room, t_list *name)
+{
+	t_room		*tmp;
+
+		tmp = room;
+		while (tmp && tmp->weight != weight)
+			tmp = tmp->next;
+		if (tmp->weight == weight)
+			return (tmp);
+		return (find_next_node(weight, room, name));
+}
+
+
+*/
 t_room		*find_next_node(int weight, t_room *room, t_list *name)
 {
 	t_room		*tmp;
@@ -52,18 +67,9 @@ t_room		*find_next_node(int weight, t_room *room, t_list *name)
 	{
 		tmp = room;
 		while (tmp && tmp->weight != weight)
-		{
-			ft_putendl("searching");
 			tmp = tmp->next;
-		}
 		if (tmp->weight == weight)
-		{
 			found = 1;
-			ft_putstr("weight = ");
-			ft_putnbr(weight);
-			ft_putstr(" for the room ");
-			ft_putendl(tmp->name);
-		}
 		else
 			name = name->next;
 	}
@@ -99,14 +105,12 @@ t_list		*shortest_route(t_room *room)
 		ft_error(7);
 	weight = tmp->weight;
 	route = lst_add(route, lst_new(tmp->name));
-	//add_to_route(&route, tmp);
 	while (weight-- > 1)
 	{
 		name = tmp->links;
 		tmp = room;
 		tmp = find_next_node(weight, room, name);
 		route = lst_add(route, lst_new(tmp->name));
-//		add_to_route(&route, tmp);
 	}
 	return (route);
 }

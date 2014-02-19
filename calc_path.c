@@ -13,31 +13,6 @@
 #include "lem-in.h"
 #include <libft.h>
 /*
-int			path_to_end(t_room **path, t_room **room)
-{
-	t_room		*tpath;
-	t_room		*troom;
-	char		*togo;
-
-	tpath = *path;
-	troom = *room;
-	while (tpath->next)
-		tpath = tpath->next;
-	togo = ft_strdup(tpath->links->value);
-	while (troom || ft_strcmp(togo, troom->name) != 0)
-		troom = troom->next;
-	if (troom->visited == 0)
-	{
-		troom->visited = 1;
-		tpath = rm_add(tpath, troom);
-		ft_putstr("La room suivante a ete ajoutee au chemin : ");
-		ft_putendl(troom->name);
-	}
-	if (troom->end == 1)
-		return (1);
-	return (0);
-}
-*/
 t_room		*find_end(t_room *room)
 {
 	t_room		*tmp;
@@ -52,7 +27,7 @@ t_room		*find_end(t_room *room)
 	ft_error(3);
 	return (NULL);
 }
-
+*/
 t_room		*find_start(t_room *room)
 {
 	t_room		*tmp;
@@ -104,14 +79,12 @@ int			swipe_start(t_room **room)
 	return (flag);
 }
 
-t_room		*calc_path(t_room *room)
+t_list		*calc_path(t_room *room)
 {
 	t_room		*start;
-	t_room		*end;
 	t_list		*route;
 
 	start = find_start(room);
-	end = find_end(room);
 	start->weight = 1;
 	while (swipe_start(&room) != 0)
 		;
@@ -123,8 +96,8 @@ t_room		*calc_path(t_room *room)
 //		room = room->next;
 //	}
 	route = shortest_route(room);
-	ft_putendl(route->value);
+//	ft_putendl(route->value);
 	ft_lstrev(&route);
 	print_route(route);
-	return (end);
+	return (route);
 }
