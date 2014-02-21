@@ -13,7 +13,7 @@
 #include "lem-in.h"
 #include <libft.h>
 
-void		p(t_ant *tmp, t_route_el **route, t_house **house, t_ant **ants)
+void	p(t_ant *tmp, t_route_el **route, t_house **house, t_ant **ants)
 {
 	if (tmp->route)
 	{
@@ -39,7 +39,7 @@ void		p(t_ant *tmp, t_route_el **route, t_house **house, t_ant **ants)
 	}
 }
 
-void		start_march(t_ant *ants, t_house *house, t_route *list)
+void	start_march(t_ant *ants, t_house *house, t_route *list)
 {
 	t_ant		*tmp;
 	t_route_el	*route;
@@ -57,7 +57,7 @@ void		start_march(t_ant *ants, t_house *house, t_route *list)
 	}
 }
 
-void		create_ant(t_ant **swarm, int id, t_list *simple_route)
+void	create_ant(t_ant **swarm, int id, t_list *simple_route)
 {
 	t_ant		*new;
 	t_ant		*tmp;
@@ -78,7 +78,7 @@ void		create_ant(t_ant **swarm, int id, t_list *simple_route)
 		*swarm = new;
 }
 
-void		march_of_ants(t_list *ant_route, t_house *house, t_route *route)
+void	march_of_ants(t_list *ant_route, t_house *house, t_route *route)
 {
 	int			id;
 	t_ant		*swarm;
@@ -93,50 +93,3 @@ void		march_of_ants(t_list *ant_route, t_house *house, t_route *route)
 	start_march(swarm, house, route);
 }
 
-t_route		*route_loop(t_route *list)
-{
-	t_route_el	*tmp;
-
-	tmp = list->first;
-	tmp->prev = list->last;
-	tmp = list->last;
-	tmp->next = list->first;
-	return (list);
-}
-
-t_route		*add_route(t_route *route, char *str)
-{
-	t_route_el		*e;
-
-	e = malloc(sizeof(t_route_el));
-	e->value = str;
-	e->next = NULL;
-	if (route->first == NULL)
-	{
-		e->prev = NULL;
-		route->first = e;
-	}
-	else
-	{
-		route->last->next = e;
-		e->prev = route->last;
-	}
-	route->last = e;
-	return (route);
-}
-
-t_route		*make_route(t_list *list)
-{
-	t_route		*route;
-
-	route = malloc(sizeof(t_route));
-	route->first = NULL;
-	route->last = NULL;
-	while (list)
-	{
-		route = add_route(route, list->value);
-		list = list->next;
-	}
-	route_loop(route);
-	return (route);
-}
